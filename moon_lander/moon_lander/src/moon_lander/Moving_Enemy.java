@@ -43,11 +43,11 @@ public class Moving_Enemy {
 
     // 충돌 확인을 위한 Rectangle 메소드
     public Rectangle drawRect() {
-        return new Rectangle(x, y, 60, 60);
+        return new Rectangle(x, y, 30, 30);
     }
 
     public void Draw(Graphics2D g2d) {
         g2d.setColor(Color.black);
-        g2d.drawRect(x, y, 60, 60);
+        g2d.drawRect(x, y, 30, 30);
     }
 }
