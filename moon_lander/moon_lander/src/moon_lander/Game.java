@@ -23,12 +23,12 @@ public class Game {
     /**
      * The space rocket with which player will have to land.
      */
-    private PlayerRocket playerRocket1 = new PlayerRocket();;
+    private PlayerRocket playerRocket1 = new PlayerRocket();
 
     /**
      * Landing area on which rocket will have to land.
      */
-    private LandingArea landingArea = new LandingArea();;
+    private LandingArea landingArea1 = new LandingArea();
 
     /**
      * Game background image.
@@ -40,9 +40,9 @@ public class Game {
      */
     private BufferedImage redBorderImg;
     /* Enemy */
-    private Unmoved_Enemy UnmoveEnemy;
+    private Unmoved_Enemy UnmoveEnemy = new Unmoved_Enemy();
 
-    private EnemyController moving_Enemy;
+    private EnemyController moving_Enemy = new EnemyController();
 
     public Game() {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
@@ -66,7 +66,7 @@ public class Game {
      */
     private void Initialize() {
         playerRocket1 = new PlayerRocket();
-        landingArea = new LandingArea();
+        landingArea1 = new LandingArea();
         UnmoveEnemy = new Unmoved_Enemy();
         moving_Enemy = new EnemyController();
     }
@@ -92,7 +92,7 @@ public class Game {
     public void RestartGame() {
         playerRocket1.ResetPlayer();
         UnmoveEnemy.ResetUnmovedEnemy();
-        moving_Enemy.ResetController();
+        // moving_Enemy.ResetController();
     }
 
     /**
@@ -109,10 +109,10 @@ public class Game {
         // or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing
         // area.
-        if (playerRocket1.y + playerRocket1.rocketImgHeight - 10 > landingArea.y) {
+        if (playerRocket1.y + playerRocket1.rocketImgHeight - 10 > landingArea1.y) {
             // Here we check if the rocket is over landing area.
-            if ((playerRocket1.x > landingArea.x) && (playerRocket1.x < landingArea.x + landingArea.landingAreaImgWidth
-                    - playerRocket1.rocketImgWidth)) {
+            if ((playerRocket1.x > landingArea1.x) && (playerRocket1.x < landingArea1.x
+                    + landingArea1.landingArea1ImgWidth - playerRocket1.rocketImgWidth)) {
                 // Here we check if the rocket speed isn't too high.
                 if (playerRocket1.speedY <= playerRocket1.topLandingSpeed)
                     playerRocket1.landed = true;
@@ -141,6 +141,7 @@ public class Game {
                 break;
             }
         }
+
     }
 
     /**
@@ -152,7 +153,7 @@ public class Game {
     public void Draw(Graphics2D g2d, Point mousePosition) {
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
 
-        landingArea.Draw(g2d);
+        landingArea1.Draw(g2d);
 
         playerRocket1.Draw(g2d);
 

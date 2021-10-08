@@ -46,6 +46,8 @@ public class PlayerRocket2 {
      */
     public boolean crashed;
 
+    public boolean getItem;
+
     /**
      * Accelerating speed of the rocket.
      */

@@ -45,6 +45,8 @@ public class PlayerRocket {
      */
     public boolean crashed;
 
+    public boolean getItem;
+
     /**
      * Accelerating speed of the rocket.
      */
@@ -85,6 +87,8 @@ public class PlayerRocket {
      * Image of the rocket fire.
      */
     private BufferedImage rocketFireImg;
+
+    private BufferedImage blackscreenImg;
 
     /* Enemy var */
     private Unmoved_Enemy enemy;
@@ -131,6 +135,9 @@ public class PlayerRocket {
 
             URL rocketFireImgUrl = this.getClass().getResource("/resources/images/rocket_fire.png");
             rocketFireImg = ImageIO.read(rocketFireImgUrl);
+
+            URL blackscreenImgUrl = this.getClass().getResource("/resources/images/blackscreen.png");
+            blackscreenImg = ImageIO.read(blackscreenImgUrl);
         } catch (IOException ex) {
             Logger.getLogger(PlayerRocket.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -209,6 +216,9 @@ public class PlayerRocket {
             if (Canvas.keyboardKeyState(KeyEvent.VK_W))
                 g2d.drawImage(rocketFireImg, x + 12, y + 66, null);
             g2d.drawImage(rocketImg, x, y, null);
+        }
+        if (getItem) {
+            g2d.drawImage(blackscreenImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
         }
     }
 }
