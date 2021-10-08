@@ -23,12 +23,12 @@ public class Game {
     /**
      * The space rocket with which player will have to land.
      */
-    private PlayerRocket playerRocket1;
+    private PlayerRocket playerRocket1 = new PlayerRocket();;
 
     /**
      * Landing area on which rocket will have to land.
      */
-    private LandingArea landingArea;
+    private LandingArea landingArea = new LandingArea();;
 
     /**
      * Game background image.

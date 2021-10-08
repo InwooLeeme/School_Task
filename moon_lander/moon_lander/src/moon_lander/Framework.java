@@ -283,6 +283,7 @@ public class Framework extends Canvas {
             case GAMEOVER2P:
                 game2p.DrawGameOver(g2d, mousePosition(), gameTime);
                 buttonAdd(false);
+                break;
             case MAIN_MENU:
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
@@ -340,6 +341,17 @@ public class Framework extends Canvas {
         gameState = GameState.PLAYING;
     }
 
+    private void restartGame2() {
+        // We set gameTime to zero and lastTime to current time for later calculations.
+        gameTime = 0;
+        lastTime = System.nanoTime();
+
+        game2p.RestartGame2();
+
+        // We change game status so that the game can start.
+        gameState = GameState.PLAYING2P;
+    }
+
     /**
      * Returns the position of the mouse pointer in game frame/window. If mouse
      * position is null than this method return 0,0 coordinate.
@@ -376,7 +388,7 @@ public class Framework extends Canvas {
                 break;
             case GAMEOVER2P:
                 if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)
-                    restartGame();
+                    restartGame2();
                 break;
         }
     }
