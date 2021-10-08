@@ -1,6 +1,7 @@
 package moon_lander;
 
 import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
@@ -9,8 +10,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import java.awt.Rectangle;
-import java.util.LinkedList;
 
 /**
  * Actual game.
@@ -18,12 +17,14 @@ import java.util.LinkedList;
  * @author www.gametutorial.net
  */
 
-public class Game {
+public class Game2p {
 
     /**
      * The space rocket with which player will have to land.
      */
     private PlayerRocket playerRocket1;
+
+    private PlayerRocket playerRocket2;
 
     /**
      * Landing area on which rocket will have to land.
@@ -39,12 +40,8 @@ public class Game {
      * Red border of the frame. It is used when player crash the rocket.
      */
     private BufferedImage redBorderImg;
-    /* Enemy */
-    private Unmoved_Enemy UnmoveEnemy;
 
-    private EnemyController moving_Enemy;
-
-    public Game() {
+    public Game2p() {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
 
         Thread threadForInitGame = new Thread() {
@@ -55,7 +52,7 @@ public class Game {
                 // Load game files (images, sounds, ...)
                 LoadContent();
 
-                Framework.gameState = Framework.GameState.PLAYING;
+                Framework.gameState = Framework.GameState.PLAYING2P;
             }
         };
         threadForInitGame.start();
@@ -66,9 +63,9 @@ public class Game {
      */
     private void Initialize() {
         playerRocket1 = new PlayerRocket();
+        playerRocket2 = new PlayerRocket();
+
         landingArea = new LandingArea();
-        UnmoveEnemy = new Unmoved_Enemy();
-        moving_Enemy = new EnemyController();
     }
 
     /**
@@ -91,8 +88,7 @@ public class Game {
      */
     public void RestartGame() {
         playerRocket1.ResetPlayer();
-        UnmoveEnemy.ResetUnmovedEnemy();
-        moving_Enemy.ResetController();
+        playerRocket2.ResetPlayer();
     }
 
     /**
@@ -104,42 +100,43 @@ public class Game {
     public void UpdateGame(long gameTime, Point mousePosition) {
         // Move the rocket
         playerRocket1.Update();
-        moving_Enemy.Update();
+        playerRocket2.Update2();
+
         // Checks where the player rocket is. Is it still in the space or is it landed
         // or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing
         // area.
-        if (playerRocket1.y + playerRocket1.rocketImgHeight - 10 > landingArea.y) {
+        if (playerRocket1.y + playerRocket1.rocketImgHeight - 10 > landingArea.y
+                || playerRocket2.y + playerRocket2.rocketImgHeight - 10 > landingArea.y) {
             // Here we check if the rocket is over landing area.
-            if ((playerRocket1.x > landingArea.x) && (playerRocket1.x < landingArea.x + landingArea.landingAreaImgWidth
-                    - playerRocket1.rocketImgWidth)) {
+            if ((playerRocket1.x > landingArea.x)
+                    && (playerRocket1.x < landingArea.x + landingArea.landingAreaImgWidth
+                            - playerRocket1.rocketImgWidth)
+                    || (playerRocket2.x > landingArea.x) && (playerRocket2.x < landingArea.x
+                            + landingArea.landingAreaImgWidth - playerRocket2.rocketImgWidth)) {
                 // Here we check if the rocket speed isn't too high.
-                if (playerRocket1.speedY <= playerRocket1.topLandingSpeed)
-                    playerRocket1.landed = true;
-                else
-                    playerRocket1.crashed = true;
-            } else
+                if (playerRocket1.speedY <= playerRocket1.topLandingSpeed
+                        || playerRocket2.speedY <= playerRocket2.topLandingSpeed) {
+                    if (playerRocket1.y < playerRocket2.y) {
+                        playerRocket1.landed = true;
+                        playerRocket2.crashed = true;
+                    } else if (playerRocket1.y == playerRocket2.y) {
+                        playerRocket1.landed = true;
+                        playerRocket2.landed = true;
+                    } else {
+                        playerRocket1.crashed = true;
+                        playerRocket2.landed = true;
+                    }
+
+                }
+            } else {
                 playerRocket1.crashed = true;
-
-            Framework.gameState = Framework.GameState.GAMEOVER;
-        }
-
-        /* Enemy Collision */
-        Rectangle rocket = playerRocket1.makeRect();
-        Rectangle enemy = UnmoveEnemy.drawRect();
-        if (rocket.intersects(enemy)) {
-            playerRocket1.crashed = true;
-            Framework.gameState = Framework.gameState.GAMEOVER;
-        }
-        /* Moving Enemy Collision */
-        LinkedList<Moving_Enemy> e = moving_Enemy.getEnemyList();
-
-        for (int i = 0; i < e.size(); i++) {
-            if (rocket.intersects(e.get(i).drawRect())) {
-                playerRocket1.crashed = true;
-                Framework.gameState = Framework.gameState.GAMEOVER;
-                break;
+                playerRocket2.crashed = true;
             }
+            playerRocket1.crashed = true;
+            playerRocket2.crashed = true;
+
+            Framework.gameState = Framework.GameState.GAMEOVER2P;
         }
     }
 
@@ -155,10 +152,7 @@ public class Game {
         landingArea.Draw(g2d);
 
         playerRocket1.Draw(g2d);
-
-        UnmoveEnemy.Draw(g2d);
-
-        moving_Enemy.Draw(g2d);
+        playerRocket2.Draw2p(g2d);
     }
 
     /**
@@ -175,7 +169,11 @@ public class Game {
                 Framework.frameHeight / 3 + 70);
 
         if (playerRocket1.landed) {
-            g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
+            g2d.drawString("1p have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
+            g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.",
+                    Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
+        } else if (playerRocket2.landed) {
+            g2d.drawString("2p have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
             g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.",
                     Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
         } else {
