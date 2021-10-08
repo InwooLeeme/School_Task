@@ -108,45 +108,44 @@ public class Framework extends Canvas {
 
             button5.setVisible(add);
             button5.setBounds(100, 400, 100, 50);
-
+            /* Level 1 */
             button5.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame();
+                    newGame(1);
                 }
             });
 
             button6.setVisible(add);
             button6.setBounds(210, 400, 100, 50);
-
+            /* Level 2 */
             button6.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
+                    newGame(2);
                 }
             });
             button7.setVisible(add);
             button7.setBounds(330, 400, 100, 50);
-
+            /* Level 3 */
             button7.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
+                    newGame(3);
                 }
             });
 
             button8.setVisible(add);
             button8.setBounds(450, 400, 100, 50);
-
+            /* Level 4 */
             button8.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
+                    newGame(4);
                 }
             });
-
             button9.setVisible(add);
             button9.setBounds(570, 400, 100, 50);
-
+            /* Level 5 */
             button9.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
+                    newGame(5);
                 }
             });
 
@@ -172,7 +171,7 @@ public class Framework extends Canvas {
 
             button1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame();
+                    newGame(1);
                 }
             });
 
@@ -425,12 +424,12 @@ public class Framework extends Canvas {
     /**
      * Starts new game.
      */
-    private void newGame() {
+    private void newGame(int level) {
         // We set gameTime to zero and lastTime to current time for later calculations.
         gameTime = 0;
         lastTime = System.nanoTime();
 
-        game = new Game();
+        game = new Game(level);
 
         requestFocus();
     }
@@ -498,7 +497,7 @@ public class Framework extends Canvas {
     public void keyReleasedFramework(KeyEvent e) {
         switch (gameState) {
             case MAIN_MENU:
-                newGame();
+                newGame(1);
                 break;
             case GAMEOVER:
                 if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_ENTER)

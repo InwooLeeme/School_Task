@@ -10,13 +10,13 @@ public class EnemyController {
     Moving_Enemy tempEnemy;
     PlayerRocket playerRocket;
 
-    public EnemyController() {
-        for (int i = 0; i < 5; i++) {
+    public EnemyController(int count) {
+        for (int i = 0; i < count; i++) {
             addEnemy(new Moving_Enemy());
         }
     }
 
-    public void ResetController() {
+    public void ResetController(int count) {
         e.clear();
         for (int i = 0; i < 5; i++) {
             addEnemy(new Moving_Enemy());

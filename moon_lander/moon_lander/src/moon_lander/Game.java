@@ -19,7 +19,8 @@ import java.util.LinkedList;
  */
 
 public class Game {
-
+    /* StageLevel 변수(난이도 설정시 활용) */
+    private int stageLevel;
     /**
      * The space rocket with which player will have to land.
      */
@@ -42,11 +43,11 @@ public class Game {
     /* Enemy */
     private Unmoved_Enemy UnmoveEnemy = new Unmoved_Enemy();
 
-    private EnemyController moving_Enemy = new EnemyController();
+    private EnemyController moving_Enemy = new EnemyController(1);
 
-    public Game() {
+    public Game(int level) {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
-
+        stageLevel = level;
         Thread threadForInitGame = new Thread() {
             @Override
             public void run() {
@@ -67,8 +68,25 @@ public class Game {
     private void Initialize() {
         playerRocket1 = new PlayerRocket();
         landingArea1 = new LandingArea();
-        UnmoveEnemy = new Unmoved_Enemy();
-        moving_Enemy = new EnemyController();
+        switch (stageLevel) {
+            case 1:
+                //
+                break;
+            case 2:
+                UnmoveEnemy = new Unmoved_Enemy();
+                break;
+            case 3:
+                UnmoveEnemy = new Unmoved_Enemy();
+                moving_Enemy = new EnemyController(1);
+            case 4:
+                UnmoveEnemy = new Unmoved_Enemy();
+                moving_Enemy = new EnemyController(2);
+                break;
+            default:
+                UnmoveEnemy = new Unmoved_Enemy();
+                moving_Enemy = new EnemyController(3);
+                break;
+        }
     }
 
     /**
@@ -92,7 +110,7 @@ public class Game {
     public void RestartGame() {
         playerRocket1.ResetPlayer();
         UnmoveEnemy.ResetUnmovedEnemy();
-        moving_Enemy.ResetController();
+        moving_Enemy.ResetController(stageLevel);
     }
 
     /**
