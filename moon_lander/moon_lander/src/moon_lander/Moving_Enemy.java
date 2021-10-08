@@ -39,6 +39,9 @@ public class Moving_Enemy {
     // 움직임을 위한 메소드
     public void tick() {
         y += 5;
+        if (y >= Framework.frameHeight) {
+            y = 0;
+        }
     }
 
     // 충돌 확인을 위한 Rectangle 메소드

@@ -92,7 +92,7 @@ public class Game {
     public void RestartGame() {
         playerRocket1.ResetPlayer();
         UnmoveEnemy.ResetUnmovedEnemy();
-        // moving_Enemy.ResetController();
+        moving_Enemy.ResetController();
     }
 
     /**
