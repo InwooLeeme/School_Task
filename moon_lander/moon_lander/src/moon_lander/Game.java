@@ -45,6 +45,10 @@ public class Game {
 
     private EnemyController moving_Enemy = new EnemyController(1);
 
+    /* 스코어 */
+
+    private int baseScore = 1000;
+
     public Game(int level) {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         stageLevel = level;
@@ -111,6 +115,7 @@ public class Game {
         playerRocket1.ResetPlayer();
         UnmoveEnemy.ResetUnmovedEnemy();
         moving_Enemy.ResetController(stageLevel);
+        baseScore = 1000;
     }
 
     /**
@@ -197,6 +202,8 @@ public class Game {
             g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
             g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.",
                     Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
+            baseScore -= (gameTime / Framework.secInNanosec) * 15;
+            Framework.score.addScore(baseScore);
         } else {
             g2d.setColor(Color.red);
             g2d.drawString("You have crashed the rocket!", Framework.frameWidth / 2 - 95, Framework.frameHeight / 3);

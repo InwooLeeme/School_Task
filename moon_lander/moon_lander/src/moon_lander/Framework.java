@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.Vector;
 
 /**
  * Framework that controls the game (Game.java) that created it, update it and
@@ -87,10 +88,13 @@ public class Framework extends Canvas {
      */
     private BufferedImage moonLanderMenuImg;
 
+    /* 스코어 */
+    public static Score score = new Score();
+
     JButton button1 = new JButton("기본모드");
     JButton button2 = new JButton("2인 경쟁모드");
     JButton button3 = new JButton("난이도 선택모드");
-    JButton button4 = new JButton("4");
+    JButton button4 = new JButton("메인");
 
     JButton button5 = new JButton("Level 1");
     JButton button6 = new JButton("Level 2");
@@ -185,7 +189,7 @@ public class Framework extends Canvas {
             });
             button3.setVisible(add);
             button3.setBounds(400, 400, 125, 50);
-
+            /* 레벨 선택 */
             button3.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     Framework.gameState = Framework.GameState.LEVEL_MENU;
@@ -194,7 +198,11 @@ public class Framework extends Canvas {
             });
             button4.setVisible(add);
             button4.setBounds(550, 400, 125, 50);
-
+            button4.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Framework.gameState = Framework.GameState.MAIN_MENU;
+                }
+            });
         } else {
             this.remove(button1);
             this.remove(button2);
@@ -393,9 +401,11 @@ public class Framework extends Canvas {
             case MAIN_MENU:
                 g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
                 g2d.setColor(Color.white);
-                g2d.drawString("Use w a d keys to controle the rocket1.", frameWidth / 2 - 117, frameHeight / 2);
+                g2d.drawString("최고 점수 :" + score.getBestScore(), frameWidth / 2 - 40, frameHeight / 2);
+                g2d.setColor(Color.white);
+                g2d.drawString("Use w a d keys to controle the rocket1.", frameWidth / 2 - 117, frameHeight / 2 + 50);
                 g2d.drawString("Use up left right keys to controle the rocket2.", frameWidth / 2 - 117,
-                        frameHeight / 2 + 30);
+                        frameHeight / 2 + 80);
                 g2d.drawString("WWW.GAMETUTORIAL.NET", 7, frameHeight - 5);
                 Mainbutton(true);
                 Levelbutton(false);
