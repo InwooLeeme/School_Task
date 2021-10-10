@@ -116,6 +116,7 @@ public class Game {
         UnmoveEnemy.ResetUnmovedEnemy();
         moving_Enemy.ResetController(stageLevel);
         baseScore = 1000;
+        landingArea1.ResetLandingArea();
     }
 
     /**
