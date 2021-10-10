@@ -46,7 +46,7 @@ public class Moving_Enemy {
 
     public void ResetMovingEnemy() {
         x = random.nextInt(Framework.frameWidth - 60);
-        y = 0;
+        y = Framework.frameHeight - 1;
     }
 
     // 움직임을 위한 메소드
