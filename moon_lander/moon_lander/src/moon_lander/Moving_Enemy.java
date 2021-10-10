@@ -21,14 +21,27 @@ public class Moving_Enemy {
     /* enemy y position */
     public int y;
 
+    private String image = "/resources/images/movingEnemy.png";
+
+    private BufferedImage movingEnemyImg;
+
     public Moving_Enemy() {
         initialize();
-        // Lord(); /* 아직 구현 안함 */
+        LordImage();
     }
 
     public void initialize() {
         random = new Random();
         ResetMovingEnemy();
+    }
+
+    public void LordImage() {
+        try {
+            URL enemyImgUrl = this.getClass().getResource(image);
+            movingEnemyImg = ImageIO.read(enemyImgUrl);
+        } catch (Exception e) {
+            Logger.getLogger(Moving_Enemy.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     public void ResetMovingEnemy() {
@@ -51,6 +64,6 @@ public class Moving_Enemy {
 
     public void Draw(Graphics2D g2d) {
         g2d.setColor(Color.black);
-        g2d.drawRect(x, y, 30, 30);
+        g2d.drawImage(movingEnemyImg, x, y, null);
     }
 }
