@@ -45,6 +45,8 @@ public class Game {
 
     private EnemyController moving_Enemy = new EnemyController(1);
 
+    private MovingEnemyWithBullet movingBulletEnemy = new MovingEnemyWithBullet();
+
     /* 스코어 */
 
     private int baseScore = 1000;
@@ -88,6 +90,7 @@ public class Game {
                 break;
             default:
                 UnmoveEnemy = new Unmoved_Enemy();
+                movingBulletEnemy = new MovingEnemyWithBullet();
                 moving_Enemy = new EnemyController(3);
                 break;
         }
@@ -117,6 +120,7 @@ public class Game {
         moving_Enemy.ResetController(stageLevel);
         baseScore = 1000;
         landingArea1.ResetLandingArea();
+        movingBulletEnemy.Reset();
     }
 
     /**
@@ -129,6 +133,7 @@ public class Game {
         // Move the rocket
         playerRocket1.Update();
         moving_Enemy.Update();
+        movingBulletEnemy.Update();
         // Checks where the player rocket is. Is it still in the space or is it landed
         // or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing
@@ -151,16 +156,16 @@ public class Game {
         /* Enemy Collision */
         Rectangle rocket = playerRocket1.makeRect();
         Rectangle enemy = UnmoveEnemy.drawRect();
-        if (rocket.intersects(enemy)) {
+        Rectangle border = MovingEnemyWithBullet.bullet.drawRect();
+        if (rocket.intersects(enemy) || rocket.intersects(border)) {
             playerRocket1.crashed = true;
             Framework.gameState = Framework.gameState.GAMEOVER;
         }
         /* Moving Enemy Collision */
         LinkedList<Moving_Enemy> e = moving_Enemy.getEnemyList();
-        LinkedList<Bullet> bullet = moving_Enemy.getBulletList();
 
         for (int i = 0; i < e.size(); i++) {
-            if (rocket.intersects(e.get(i).drawRect()) || rocket.intersects(bullet.get(i).drawRect())) {
+            if (rocket.intersects(e.get(i).drawRect())) {
                 playerRocket1.crashed = true;
                 Framework.gameState = Framework.gameState.GAMEOVER;
                 break;
@@ -185,6 +190,8 @@ public class Game {
         UnmoveEnemy.Draw(g2d);
 
         moving_Enemy.Draw(g2d);
+
+        movingBulletEnemy.Draw(g2d);
     }
 
     /**

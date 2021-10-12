@@ -3,6 +3,8 @@ package moon_lander;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.net.URL;
+import java.time.chrono.ThaiBuddhistChronology;
+import java.util.LinkedList;
 import java.util.Random;
 import java.awt.image.BufferedImage;
 import java.util.logging.Level;
@@ -13,35 +15,32 @@ public class MovingEnemyWithBullet {
     /* x좌표를 설정시에 랜덤한 값을 사용함 */
     private Random random;
     /* enemy x position */
-    public int x;
+    public static int x;
     /* enemy y position */
-    public int y;
+    public static int y;
     /* Image */
     private String image = "/resources/images/movingEnemy.png";
 
     private BufferedImage movingEnemyImg;
 
+    public static Bullet bullet;
+
     public MovingEnemyWithBullet() {
-        initialize();
         LordImage();
-    }
-
-    public int getX() {
-        return this.x;
-    }
-
-    public int getY() {
-        return this.y;
-    }
-
-    public void initialize() {
         random = new Random();
-        ResetMovingEnemy();
-    }
-
-    public void ResetMovingEnemy() {
         x = random.nextInt(Framework.frameWidth - 60);
         y = Framework.frameHeight - 40;
+        bullet = new Bullet(x + 10, y);
+    }
+
+    public void Reset() {
+        x = random.nextInt(Framework.frameWidth - 60);
+        y = Framework.frameHeight - 40;
+        bullet = new Bullet(x + 10, y);
+    }
+
+    public void Update() {
+        bullet.tick();
     }
 
     public void LordImage() {
@@ -56,5 +55,6 @@ public class MovingEnemyWithBullet {
     public void Draw(Graphics2D g2d) {
         g2d.setColor(Color.black);
         g2d.drawImage(movingEnemyImg, x, y, null);
+        bullet.Draw(g2d);
     }
 }
