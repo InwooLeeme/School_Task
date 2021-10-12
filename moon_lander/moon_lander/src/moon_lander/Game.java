@@ -157,9 +157,10 @@ public class Game {
         }
         /* Moving Enemy Collision */
         LinkedList<Moving_Enemy> e = moving_Enemy.getEnemyList();
+        LinkedList<Bullet> bullet = moving_Enemy.getBulletList();
 
         for (int i = 0; i < e.size(); i++) {
-            if (rocket.intersects(e.get(i).drawRect())) {
+            if (rocket.intersects(e.get(i).drawRect()) || rocket.intersects(bullet.get(i).drawRect())) {
                 playerRocket1.crashed = true;
                 Framework.gameState = Framework.gameState.GAMEOVER;
                 break;

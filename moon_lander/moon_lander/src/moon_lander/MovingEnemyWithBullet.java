@@ -1,0 +1,60 @@
+package moon_lander;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.net.URL;
+import java.util.Random;
+import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+
+public class MovingEnemyWithBullet {
+    /* x좌표를 설정시에 랜덤한 값을 사용함 */
+    private Random random;
+    /* enemy x position */
+    public int x;
+    /* enemy y position */
+    public int y;
+    /* Image */
+    private String image = "/resources/images/movingEnemy.png";
+
+    private BufferedImage movingEnemyImg;
+
+    public MovingEnemyWithBullet() {
+        initialize();
+        LordImage();
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public void initialize() {
+        random = new Random();
+        ResetMovingEnemy();
+    }
+
+    public void ResetMovingEnemy() {
+        x = random.nextInt(Framework.frameWidth - 60);
+        y = Framework.frameHeight - 40;
+    }
+
+    public void LordImage() {
+        try {
+            URL enemyImgUrl = this.getClass().getResource(image);
+            movingEnemyImg = ImageIO.read(enemyImgUrl);
+        } catch (Exception e) {
+            Logger.getLogger(Moving_Enemy.class.getName()).log(Level.SEVERE, null, e);
+        }
+    }
+
+    public void Draw(Graphics2D g2d) {
+        g2d.setColor(Color.black);
+        g2d.drawImage(movingEnemyImg, x, y, null);
+    }
+}
