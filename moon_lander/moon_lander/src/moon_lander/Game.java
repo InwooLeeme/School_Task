@@ -75,16 +75,16 @@ public class Game {
         playerRocket1 = new PlayerRocket();
         landingArea1 = new LandingArea();
         switch (stageLevel) {
-            case 1:
+            case 0:
                 //
+                break;
+            case 1:
+                UnmoveEnemy = new Unmoved_Enemy();
                 break;
             case 2:
                 UnmoveEnemy = new Unmoved_Enemy();
-                break;
-            case 3:
-                UnmoveEnemy = new Unmoved_Enemy();
                 moving_Enemy = new EnemyController(1);
-            case 4:
+            case 3:
                 UnmoveEnemy = new Unmoved_Enemy();
                 moving_Enemy = new EnemyController(2);
                 break;
@@ -116,9 +116,11 @@ public class Game {
      */
     public void RestartGame() {
         playerRocket1.ResetPlayer();
-        UnmoveEnemy.ResetUnmovedEnemy();
-        moving_Enemy.ResetController(stageLevel);
+        if (stageLevel >= 1)
+            UnmoveEnemy.ResetUnmovedEnemy();
         baseScore = 1000;
+        if (stageLevel >= 2)
+            moving_Enemy.ResetController(stageLevel);
         landingArea1.ResetLandingArea();
         if (stageLevel == 5)
             movingBulletEnemy.Reset();
@@ -133,7 +135,8 @@ public class Game {
     public void UpdateGame(long gameTime, Point mousePosition) {
         // Move the rocket
         playerRocket1.Update();
-        moving_Enemy.Update();
+        if (stageLevel >= 2)
+            moving_Enemy.Update();
         if (stageLevel == 5)
             movingBulletEnemy.Update();
         // Checks where the player rocket is. Is it still in the space or is it landed
@@ -188,10 +191,10 @@ public class Game {
         landingArea1.Draw(g2d);
 
         playerRocket1.Draw(g2d);
-
-        UnmoveEnemy.Draw(g2d);
-
-        moving_Enemy.Draw(g2d);
+        if (stageLevel >= 1)
+            UnmoveEnemy.Draw(g2d);
+        if (stageLevel >= 2)
+            moving_Enemy.Draw(g2d);
 
         if (stageLevel == 5)
             movingBulletEnemy.Draw(g2d);

@@ -115,7 +115,7 @@ public class Framework extends Canvas {
             /* Level 1 */
             button5.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame(1);
+                    newGame(0);
                 }
             });
 
@@ -124,7 +124,7 @@ public class Framework extends Canvas {
             /* Level 2 */
             button6.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame(2);
+                    newGame(1);
                 }
             });
             button7.setVisible(add);
@@ -132,7 +132,7 @@ public class Framework extends Canvas {
             /* Level 3 */
             button7.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame(3);
+                    newGame(2);
                 }
             });
 
@@ -141,7 +141,7 @@ public class Framework extends Canvas {
             /* Level 4 */
             button8.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame(4);
+                    newGame(3);
                 }
             });
             button9.setVisible(add);
@@ -175,7 +175,7 @@ public class Framework extends Canvas {
 
             button1.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    newGame(1);
+                    newGame(0);
                 }
             });
 
