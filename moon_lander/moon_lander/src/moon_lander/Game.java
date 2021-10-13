@@ -88,7 +88,7 @@ public class Game {
                 UnmoveEnemy = new Unmoved_Enemy();
                 moving_Enemy = new EnemyController(2);
                 break;
-            default:
+            case 5:
                 UnmoveEnemy = new Unmoved_Enemy();
                 movingBulletEnemy = new MovingEnemyWithBullet();
                 moving_Enemy = new EnemyController(3);
@@ -120,7 +120,8 @@ public class Game {
         moving_Enemy.ResetController(stageLevel);
         baseScore = 1000;
         landingArea1.ResetLandingArea();
-        movingBulletEnemy.Reset();
+        if (stageLevel == 5)
+            movingBulletEnemy.Reset();
     }
 
     /**
@@ -133,7 +134,8 @@ public class Game {
         // Move the rocket
         playerRocket1.Update();
         moving_Enemy.Update();
-        movingBulletEnemy.Update();
+        if (stageLevel == 5)
+            movingBulletEnemy.Update();
         // Checks where the player rocket is. Is it still in the space or is it landed
         // or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing
@@ -191,7 +193,8 @@ public class Game {
 
         moving_Enemy.Draw(g2d);
 
-        movingBulletEnemy.Draw(g2d);
+        if (stageLevel == 5)
+            movingBulletEnemy.Draw(g2d);
     }
 
     /**
