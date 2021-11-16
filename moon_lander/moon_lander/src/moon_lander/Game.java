@@ -116,7 +116,7 @@ public class Game {
     public void RestartGame() {
         playerRocket1.ResetPlayer();
         if (stageLevel >= 1)
-            UnmoveEnemy.ResetUnmovedEnemy();
+            UnmoveEnemy.ResetEnemy();
         baseScore = 1000;
         if (stageLevel >= 2)
             moving_Enemy.ResetController(stageLevel);
@@ -159,9 +159,9 @@ public class Game {
 
         /* Enemy Collision */
         Rectangle rocket = playerRocket1.makeRect();
-        Rectangle enemy = UnmoveEnemy.drawRect();
+        Rectangle enemy = UnmoveEnemy.getBounds();
         Rectangle border = MovingEnemyWithBullet.bullet.drawRect();
-        if (rocket.intersects(enemy) || rocket.intersects(border)) {
+        if (UnmoveEnemy.collision(rocket, enemy) || rocket.intersects(border)) {
             playerRocket1.crashed = true;
             Framework.gameState = Framework.gameState.GAMEOVER;
         }
