@@ -25,7 +25,6 @@ public class Game {
      * The space rocket with which player will have to land.
      */
     private PlayerRocket playerRocket1 = new PlayerRocket();
-
     /**
      * Landing area on which rocket will have to land.
      */
@@ -75,24 +74,24 @@ public class Game {
         playerRocket1 = new PlayerRocket();
         landingArea1 = new LandingArea();
         switch (stageLevel) {
-            case 0:
-                //
-                break;
-            case 1:
-                UnmoveEnemy = new Unmoved_Enemy();
-                break;
-            case 2:
-                UnmoveEnemy = new Unmoved_Enemy();
-                moving_Enemy = new EnemyController(1);
-            case 3:
-                UnmoveEnemy = new Unmoved_Enemy();
-                moving_Enemy = new EnemyController(2);
-                break;
-            case 5:
-                UnmoveEnemy = new Unmoved_Enemy();
-                movingBulletEnemy = new MovingEnemyWithBullet();
-                moving_Enemy = new EnemyController(3);
-                break;
+        case 0:
+            //
+            break;
+        case 1:
+            UnmoveEnemy = new Unmoved_Enemy();
+            break;
+        case 2:
+            UnmoveEnemy = new Unmoved_Enemy();
+            moving_Enemy = new EnemyController(1);
+        case 3:
+            UnmoveEnemy = new Unmoved_Enemy();
+            moving_Enemy = new EnemyController(2);
+            break;
+        case 5:
+            UnmoveEnemy = new Unmoved_Enemy();
+            movingBulletEnemy = new MovingEnemyWithBullet();
+            moving_Enemy = new EnemyController(3);
+            break;
         }
     }
 
@@ -176,7 +175,6 @@ public class Game {
                 break;
             }
         }
-
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+
 import java.awt.Rectangle;
 
 /**
@@ -90,8 +91,9 @@ public class PlayerRocket {
 
     private BufferedImage blackscreenImg;
 
-    /* Enemy var */
-    private Unmoved_Enemy enemy;
+    /* Max Fleu gauge */
+    private int fuelGauge;
+    private int fuelGaugeHeight = 20;
     /**
      * Width of rocket.
      */
@@ -118,6 +120,8 @@ public class PlayerRocket {
         speedStopping = 1;
 
         topLandingSpeed = 5;
+        /* default Fleu Gauge */
+        fuelGauge = 150;
     }
 
     private void LoadContent() {
@@ -154,10 +158,21 @@ public class PlayerRocket {
         y = 40;
         speedX = 0;
         speedY = 0;
+
+        /* default Fleu Gauge */
+        fuelGauge = 150;
     }
 
     public Rectangle makeRect() {
         return new Rectangle(x, y, rocketImgWidth, rocketImgHeight);
+    }
+
+    /*
+     * Draw fleu gauge for playerRocket
+     */
+    private void drawFeluGuage(Graphics2D g2d) {
+        g2d.setColor(Color.black);
+        g2d.fillRect(0, 20, fuelGauge, fuelGaugeHeight);
     }
 
     /**
@@ -165,9 +180,10 @@ public class PlayerRocket {
      */
     public void Update() {
         // Calculating speed for moving up or down.
-        if (Canvas.keyboardKeyState(KeyEvent.VK_W))
+        if (Canvas.keyboardKeyState(KeyEvent.VK_W)) {
             speedY -= speedAccelerating;
-        else
+            fuelGauge -= 2; // if user press w key
+        } else
             speedY += speedStopping;
 
         // Calculating speed for moving or stopping to the left.
@@ -197,11 +213,17 @@ public class PlayerRocket {
             y = 0;
             speedY = 0;
         }
+        /* If User spent all fleu */
+        if (fuelGauge == 0) {
+            Framework.gameState = Framework.gameState.GAMEOVER;
+            this.crashed = true;
+        }
     }
 
     public void Draw(Graphics2D g2d) {
         g2d.setColor(Color.white);
         g2d.drawString("Rocket coordinates: " + x + " : " + y, 5, 15);
+        drawFeluGuage(g2d);
         // If the rocket is landed.
         if (landed) {
             g2d.drawImage(rocketLandedImg, x, y, null);
