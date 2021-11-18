@@ -40,9 +40,11 @@ public class Game {
      */
     private BufferedImage redBorderImg;
     /* Enemy */
-    private Unmoved_Enemy UnmoveEnemy = new Unmoved_Enemy();
+    private int unMovedEnemyID = 1;
+    private int movingEnemyID = 2;
+    private Unmoved_Enemy UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
 
-    private EnemyController moving_Enemy = new EnemyController(1);
+    private EnemyController moving_Enemy = new EnemyController(1, movingEnemyID);
 
     private MovingEnemyWithBullet movingBulletEnemy = new MovingEnemyWithBullet();
 
@@ -78,19 +80,19 @@ public class Game {
             //
             break;
         case 1:
-            UnmoveEnemy = new Unmoved_Enemy();
+            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
             break;
         case 2:
-            UnmoveEnemy = new Unmoved_Enemy();
-            moving_Enemy = new EnemyController(1);
+            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+            moving_Enemy = new EnemyController(1, movingEnemyID);
         case 3:
-            UnmoveEnemy = new Unmoved_Enemy();
-            moving_Enemy = new EnemyController(2);
+            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+            moving_Enemy = new EnemyController(2, movingEnemyID);
             break;
         case 5:
-            UnmoveEnemy = new Unmoved_Enemy();
+            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
             movingBulletEnemy = new MovingEnemyWithBullet();
-            moving_Enemy = new EnemyController(3);
+            moving_Enemy = new EnemyController(3, movingEnemyID);
             break;
         }
     }
@@ -116,10 +118,10 @@ public class Game {
     public void RestartGame() {
         playerRocket1.ResetPlayer();
         if (stageLevel >= 1)
-            UnmoveEnemy.ResetEnemy();
+            UnmoveEnemy.ResetEnemy(unMovedEnemyID);
         baseScore = 1000;
         if (stageLevel >= 2)
-            moving_Enemy.ResetController(stageLevel);
+            moving_Enemy.ResetController(stageLevel, movingEnemyID);
         landingArea1.ResetLandingArea();
         if (stageLevel == 5)
             movingBulletEnemy.Reset();
@@ -159,17 +161,17 @@ public class Game {
 
         /* Enemy Collision */
         Rectangle rocket = playerRocket1.makeRect();
-        Rectangle enemy = UnmoveEnemy.getBounds();
         Rectangle border = MovingEnemyWithBullet.bullet.drawRect();
-        if (UnmoveEnemy.collision(rocket, enemy) || rocket.intersects(border)) {
+        if (UnmoveEnemy.collision(rocket) || rocket.intersects(border)) {
             playerRocket1.crashed = true;
             Framework.gameState = Framework.gameState.GAMEOVER;
         }
         /* Moving Enemy Collision */
-        LinkedList<Moving_Enemy> e = moving_Enemy.getEnemyList();
+        LinkedList<Moving_Enemy> enemys = moving_Enemy.getEnemyList();
 
-        for (int i = 0; i < e.size(); i++) {
-            if (rocket.intersects(e.get(i).drawRect())) {
+        for (int i = 0; i < enemys.size(); i++) {
+            Moving_Enemy tempEnemy = enemys.get(i);
+            if (tempEnemy.collision(rocket)) {
                 playerRocket1.crashed = true;
                 Framework.gameState = Framework.gameState.GAMEOVER;
                 break;

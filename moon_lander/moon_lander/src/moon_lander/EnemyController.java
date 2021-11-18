@@ -5,21 +5,21 @@ import java.awt.Graphics2D;
 
 public class EnemyController {
 
-    public LinkedList<Moving_Enemy> e = new LinkedList<Moving_Enemy>();
+    private LinkedList<Moving_Enemy> e = new LinkedList<Moving_Enemy>();
     public LinkedList<Bullet> bullets = new LinkedList<Bullet>();
     Moving_Enemy tempEnemy;
     Bullet tempBullet;
 
-    public EnemyController(int count) {
+    public EnemyController(int count, int id) {
         for (int i = 0; i < count; i++) {
-            addEnemy(new Moving_Enemy());
+            addEnemy(new Moving_Enemy(id));
         }
     }
 
-    public void ResetController(int count) {
+    public void ResetController(int count, int id) {
         e.clear();
         for (int i = 0; i < count; i++) {
-            addEnemy(new Moving_Enemy());
+            addEnemy(new Moving_Enemy(id));
         }
     }
 

@@ -16,11 +16,10 @@ public class Enemy {
     private int x;
     private int y;
 
-    public Enemy(String img) {
+    public Enemy(String img, int id) {
         LordImage(img);
         random = new Random();
-        ResetEnemy();
-        bounds = new Rectangle(x, y, getImgWidth(), getImgHeight());
+        ResetEnemy(id);
     }
 
     public int getImgWidth() {
@@ -31,17 +30,35 @@ public class Enemy {
         return image.getHeight();
     }
 
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
     public Rectangle getBounds() {
         return bounds;
     }
 
-    public boolean collision(Rectangle a, Rectangle b) {
-        return a.intersects(b);
+    public boolean collision(Rectangle a) {
+        return a.intersects(this.bounds);
     }
 
-    public void ResetEnemy() {
-        x = random.nextInt(Framework.frameWidth - getImgWidth() - 50);
-        y = 200;
+    public void ResetEnemy(int id) {
+        x = random.nextInt(Framework.frameWidth - getImgWidth());
+        switch (id) {
+        case 1:
+            y = 200;
+            break;
+        case 2:
+            y = Framework.frameHeight;
+            break;
+        case 3:
+            y = Framework.frameHeight - 40;
+            break;
+        }
         bounds = new Rectangle(x, y, getImgWidth(), getImgHeight());
     }
 
