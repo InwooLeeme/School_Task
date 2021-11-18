@@ -9,8 +9,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import java.util.Random;
-import java.awt.Rectangle;
-import java.awt.geom.Rectangle2D;
 
 public class Item {
     private Random random;

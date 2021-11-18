@@ -13,12 +13,17 @@ public class Enemy {
     private Random random;
     private Rectangle bounds;
     private BufferedImage image;
+    private String imgURL;
     private int x;
     private int y;
 
-    public Enemy(String img, int id) {
-        LordImage(img);
+    public Enemy(int id) {
         random = new Random();
+        if (id == 1)
+            imgURL = "/resources/images/unmovedenemy.png";
+        else if (id == 2)
+            imgURL = "/resources/images/movingEnemy.png";
+        LordImage(imgURL);
         ResetEnemy(id);
     }
 

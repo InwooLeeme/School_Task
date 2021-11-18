@@ -42,7 +42,7 @@ public class Game {
     /* Enemy */
     private int unMovedEnemyID = 1;
     private int movingEnemyID = 2;
-    private Unmoved_Enemy UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+    private Enemy UnmoveEnemy = new Enemy(unMovedEnemyID);
 
     private EnemyController moving_Enemy = new EnemyController(1, movingEnemyID);
 
@@ -80,17 +80,17 @@ public class Game {
             //
             break;
         case 1:
-            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+            UnmoveEnemy = new Enemy(unMovedEnemyID);
             break;
         case 2:
-            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+            UnmoveEnemy = new Enemy(unMovedEnemyID);
             moving_Enemy = new EnemyController(1, movingEnemyID);
         case 3:
-            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+            UnmoveEnemy = new Enemy(unMovedEnemyID);
             moving_Enemy = new EnemyController(2, movingEnemyID);
             break;
         case 5:
-            UnmoveEnemy = new Unmoved_Enemy(unMovedEnemyID);
+            UnmoveEnemy = new Enemy(unMovedEnemyID);
             movingBulletEnemy = new MovingEnemyWithBullet();
             moving_Enemy = new EnemyController(3, movingEnemyID);
             break;
