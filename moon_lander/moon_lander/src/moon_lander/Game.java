@@ -162,7 +162,7 @@ public class Game {
         /* Enemy Collision */
         Rectangle rocket = playerRocket1.makeRect();
         Rectangle border = MovingEnemyWithBullet.bullet.drawRect();
-        if (UnmoveEnemy.collision(rocket) || rocket.intersects(border)) {
+        if (UnmoveEnemy.collision(rocket, UnmoveEnemy.getBounds()) || rocket.intersects(border)) {
             playerRocket1.crashed = true;
             Framework.gameState = Framework.gameState.GAMEOVER;
         }
@@ -171,7 +171,8 @@ public class Game {
 
         for (int i = 0; i < enemys.size(); i++) {
             Moving_Enemy tempEnemy = enemys.get(i);
-            if (tempEnemy.collision(rocket)) {
+            Rectangle enemyBorder = tempEnemy.updateBounds();
+            if (tempEnemy.collision(rocket, enemyBorder)) {
                 playerRocket1.crashed = true;
                 Framework.gameState = Framework.gameState.GAMEOVER;
                 break;

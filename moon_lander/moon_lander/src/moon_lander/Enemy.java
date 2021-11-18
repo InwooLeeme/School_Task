@@ -42,8 +42,8 @@ public class Enemy {
         return bounds;
     }
 
-    public boolean collision(Rectangle a) {
-        return a.intersects(this.bounds);
+    public boolean collision(Rectangle a, Rectangle b) {
+        return a.intersects(b);
     }
 
     public void ResetEnemy(int id) {
@@ -53,13 +53,17 @@ public class Enemy {
             y = 200;
             break;
         case 2:
-            y = Framework.frameHeight;
+            y = Framework.frameHeight - 10;
             break;
         case 3:
             y = Framework.frameHeight - 40;
             break;
         }
-        bounds = new Rectangle(x, y, getImgWidth(), getImgHeight());
+        bounds = updateBounds();
+    }
+
+    public Rectangle updateBounds() {
+        return new Rectangle(x, y, getImgWidth(), getImgHeight());
     }
 
     public void LordImage(String imgURL) {
