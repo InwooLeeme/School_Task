@@ -300,6 +300,11 @@ public class PlayerRocket {
             rocket2_Y = 0;
             speed2p_Y = 0;
         }
+        /* If User spent all fleu */
+        if (fuelGauge == 0) {
+            Framework.gameState = Framework.gameState.GAMEOVER;
+            this.crashed_1p = true;
+        }
     }
 
     public void Draw(Graphics2D g2d) {
