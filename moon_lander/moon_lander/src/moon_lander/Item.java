@@ -23,7 +23,7 @@ public class Item {
 
     public int itemImgHeight;
 
-    public boolean isTouched;
+    public static boolean isTouched;
 
     private BufferedImage blackscreenImg;
 
@@ -63,15 +63,6 @@ public class Item {
 
     public Rectangle drawRect() {
         return new Rectangle(x, y, itemImgWidth, itemImgHeight);
-    }
-
-    public void DeleteLandingAreaItem(boolean hide) {
-        // hide landing area
-
-    }
-
-    public void MovingEnemyItem() {
-        // make moving enemy
     }
 
     public void Draw(Graphics2D g2d) {
