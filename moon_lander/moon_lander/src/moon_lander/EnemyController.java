@@ -6,9 +6,7 @@ import java.awt.Graphics2D;
 public class EnemyController {
 
     private LinkedList<Moving_Enemy> e = new LinkedList<Moving_Enemy>();
-    public LinkedList<Bullet> bullets = new LinkedList<Bullet>();
     Moving_Enemy tempEnemy;
-    Bullet tempBullet;
 
     public EnemyController(int count, int id) {
         for (int i = 0; i < count; i++) {
