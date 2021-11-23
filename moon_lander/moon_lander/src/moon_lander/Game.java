@@ -43,13 +43,13 @@ public class Game extends MouseAdapter {
      */
     private BufferedImage redBorderImg;
     /* Enemy */
-    private int unMovedEnemyID = 1;
-    private int movingEnemyID = 2;
-    private Enemy UnmoveEnemy = new Enemy(unMovedEnemyID);
 
-    private EnemyController moving_Enemy = new EnemyController(1, movingEnemyID);
+    // private Enemy UnmoveEnemy = new Enemy(unMovedEnemyID);
 
-    private MovingEnemyWithBullet movingBulletEnemy = new MovingEnemyWithBullet();
+    private EnemyController moving_Enemy = new EnemyController(1, 1);
+
+    // private MovingEnemyWithBullet movingBulletEnemy = new
+    // MovingEnemyWithBullet(bulletEnemyID);
 
     private int baseScore = 1000;
 
@@ -85,37 +85,29 @@ public class Game extends MouseAdapter {
      * Set variables and objects for the game.
      */
     private void Initialize() {
-
+        int gravityLevel = 1;
+        int playerRocketMode = 1;
+        int enemyCount = 0;
+        int defaultEnemyID = 1;
         switch (stageLevel) {
-        case 1:
-            playerRocket = new PlayerRocket(1, 1);
-            landingArea = new LandingArea(1);
-            break;
         case 2:
-            playerRocket = new PlayerRocket(1, 1);
-            landingArea = new LandingArea(1);
-            UnmoveEnemy = new Enemy(unMovedEnemyID);
+            enemyCount = 1;
             break;
         case 3:
-            playerRocket = new PlayerRocket(1, 1);
-            landingArea = new LandingArea(1);
-            UnmoveEnemy = new Enemy(unMovedEnemyID);
-            moving_Enemy = new EnemyController(1, movingEnemyID);
+            enemyCount = 2;
             break;
         case 4:
-            playerRocket = new PlayerRocket(2, 1);
-            landingArea = new LandingArea(1);
-            UnmoveEnemy = new Enemy(unMovedEnemyID);
-            moving_Enemy = new EnemyController(2, movingEnemyID);
+            gravityLevel = 2;
+            enemyCount = 3;
             break;
-        default:
-            playerRocket = new PlayerRocket(3, 1);
-            landingArea = new LandingArea(1);
-            UnmoveEnemy = new Enemy(unMovedEnemyID);
-            movingBulletEnemy = new MovingEnemyWithBullet();
-            moving_Enemy = new EnemyController(3, movingEnemyID);
+        case 5:
+            gravityLevel = 3;
+            enemyCount = 4;
             break;
         }
+        playerRocket = new PlayerRocket(gravityLevel, playerRocketMode);
+        landingArea = new LandingArea(1);
+        moving_Enemy = new EnemyController(enemyCount, defaultEnemyID);
     }
 
     /**
@@ -139,16 +131,16 @@ public class Game extends MouseAdapter {
     public void RestartGame() {
         playerRocket.ResetPlayer();
         landingArea.ResetLandingArea();
-
-        if (stageLevel >= 1)
-            UnmoveEnemy.ResetEnemy(unMovedEnemyID);
+        Canvas.changeBlockState(false);
+        /*
+         * if (stageLevel >= 1) UnmoveEnemy.ResetEnemy(unMovedEnemyID);
+         */
         baseScore = 1000;
-        if (stageLevel >= 2)
-            moving_Enemy.ResetController(stageLevel, movingEnemyID);
-
-        if (stageLevel == 5)
-            movingBulletEnemy.Reset();
-
+        if (stageLevel >= 1)
+            moving_Enemy.ResetController(stageLevel, 1);
+        /*
+         * if (stageLevel == 5) movingBulletEnemy.ResetEnemy(1);
+         */
     }
 
     /**
@@ -161,7 +153,7 @@ public class Game extends MouseAdapter {
         // Move the rocket
         playerRocket.Update();
         moving_Enemy.Update();
-        movingBulletEnemy.Update();
+        // movingBulletEnemy.Update();
         // Checks where the player rocket is. Is it still in the space or is it landed
         // or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing
@@ -186,16 +178,16 @@ public class Game extends MouseAdapter {
         /* Enemy Collision */
         Rectangle rocket = playerRocket.makeRect1p();
 
-        Rectangle border = MovingEnemyWithBullet.bullet.drawRect();
-        if (UnmoveEnemy.collision(rocket, UnmoveEnemy.getBounds()) || rocket.intersects(border)) {
-            playerRocket.crashed_1p = true;
-            Framework.gameState = Framework.gameState.GAMEOVER;
-        }
+        /*
+         * if (UnmoveEnemy.collision(rocket, UnmoveEnemy.getBounds())) {
+         * playerRocket.crashed_1p = true; Framework.gameState =
+         * Framework.gameState.GAMEOVER; }
+         */
         /* Moving Enemy Collision */
-        LinkedList<Moving_Enemy> enemys = moving_Enemy.getEnemyList();
+        LinkedList<Enemy> enemys = moving_Enemy.getEnemyList();
 
         for (int i = 0; i < enemys.size(); i++) {
-            Moving_Enemy tempEnemy = enemys.get(i);
+            Enemy tempEnemy = enemys.get(i);
             Rectangle enemyBorder = tempEnemy.updateBounds();
             if (tempEnemy.collision(rocket, enemyBorder)) {
                 playerRocket.crashed_1p = true;
@@ -219,11 +211,11 @@ public class Game extends MouseAdapter {
 
         playerRocket.Draw(g2d);
 
-        UnmoveEnemy.Draw(g2d);
+        // UnmoveEnemy.Draw(g2d);
 
         moving_Enemy.Draw(g2d);
 
-        movingBulletEnemy.Draw(g2d);
+        // movingBulletEnemy.Draw(g2d);
 
     }
 
