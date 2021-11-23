@@ -91,7 +91,6 @@ public class PlayerRocket {
                 break;
             default:
                 break;
-
             }
         } else if (mode == 2) {
             Initialize(1);
@@ -239,7 +238,7 @@ public class PlayerRocket {
      */
     public void Update() {
 
-        if (Canvas.keyboardKeyState(KeyEvent.VK_W)) {
+        if (Canvas.keyboardKeyState(KeyEvent.VK_W) && (Canvas.getBlock() == false)) {
             speed1p_Y -= speedAccelerating;
             fuelGauge -= 2;
         }
@@ -272,9 +271,9 @@ public class PlayerRocket {
             speed1p_Y = 0;
         }
 
-        if (Canvas.keyboardKeyState(KeyEvent.VK_UP))
+        if (Canvas.keyboardKeyState(KeyEvent.VK_UP)) {
             speed2p_Y -= speedAccelerating;
-        else
+        } else
             speed2p_Y += speedStopping;
 
         if (Canvas.keyboardKeyState(KeyEvent.VK_LEFT))
@@ -328,7 +327,7 @@ public class PlayerRocket {
         // If the rocket is still in the space.
         else {
             // If player hold down a W key we draw rocket fire.
-            if (Canvas.keyboardKeyState(KeyEvent.VK_W)) {
+            if (Canvas.keyboardKeyState(KeyEvent.VK_W) && (Canvas.getBlock() == false)) {
                 g2d.drawImage(rocketFireImg, rocket1_X + 12, rocket1_Y + 66, null);
             }
             g2d.drawImage(rocketImg, rocket1_X, rocket1_Y, null);

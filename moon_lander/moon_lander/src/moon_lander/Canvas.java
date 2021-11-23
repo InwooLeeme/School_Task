@@ -80,6 +80,10 @@ public abstract class Canvas extends JPanel
         isBlocked = flag;
     }
 
+    public static boolean getBlock() {
+        return isBlocked;
+    }
+
     // Keyboard
     /**
      * Is keyboard key "key" down?
