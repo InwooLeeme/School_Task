@@ -25,6 +25,9 @@ public abstract class Canvas extends JPanel
 
     boolean isPress = false;
 
+    // 연료가 0일때 누르지 못하게 하는 변수
+    private static boolean isBlocked = false;
+
     public Canvas() {
         // We use double buffer to draw on the screen.
         this.setDoubleBuffered(true);
@@ -73,6 +76,10 @@ public abstract class Canvas extends JPanel
 
     }
 
+    public static void changeBlockState(boolean flag) {
+        isBlocked = flag;
+    }
+
     // Keyboard
     /**
      * Is keyboard key "key" down?
@@ -87,6 +94,8 @@ public abstract class Canvas extends JPanel
     // Methods of the keyboard listener.
     @Override
     public void keyPressed(KeyEvent e) {
+        if (isBlocked)
+            return;
         keyboardState[e.getKeyCode()] = true;
     }
 

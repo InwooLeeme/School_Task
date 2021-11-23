@@ -12,6 +12,9 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+
+import moon_lander.Framework.GameState;
+
 import java.awt.Rectangle;
 
 /**
@@ -220,7 +223,7 @@ public class PlayerRocket {
 
     private void drawFuelGuage(Graphics2D g2d) {
         g2d.setColor(Color.black);
-        g2d.fillRect(0, 20, fuelGauge, fuelGaugeHeight);
+        g2d.fillRect(0, 40, fuelGauge, fuelGaugeHeight);
     }
 
     public Rectangle makeRect1p() {
@@ -301,17 +304,16 @@ public class PlayerRocket {
             speed2p_Y = 0;
         }
         /* If User spent all fleu */
-        if (fuelGauge == 0) {
-            Framework.gameState = Framework.gameState.GAMEOVER;
-            this.crashed_1p = true;
-        }
+        if (fuelGauge == 0)
+            Canvas.changeBlockState(true);
     }
 
     public void Draw(Graphics2D g2d) {
         g2d.setColor(Color.white);
 
         g2d.drawString("Rocket1p coordinates: " + rocket1_X + " : " + rocket1_Y, 5, 15);
-        g2d.drawString("Rocket2p coordinates: " + rocket2_X + " : " + rocket2_Y, 500, 15);
+        if (Framework.gameState == GameState.PLAYING2P)
+            g2d.drawString("Rocket2p coordinates: " + rocket2_X + " : " + rocket2_Y, 500, 15);
 
         drawFuelGuage(g2d);
         // If the rocket is landed.
@@ -326,8 +328,9 @@ public class PlayerRocket {
         // If the rocket is still in the space.
         else {
             // If player hold down a W key we draw rocket fire.
-            if (Canvas.keyboardKeyState(KeyEvent.VK_W))
+            if (Canvas.keyboardKeyState(KeyEvent.VK_W)) {
                 g2d.drawImage(rocketFireImg, rocket1_X + 12, rocket1_Y + 66, null);
+            }
             g2d.drawImage(rocketImg, rocket1_X, rocket1_Y, null);
         }
         if (landed_2p) {
