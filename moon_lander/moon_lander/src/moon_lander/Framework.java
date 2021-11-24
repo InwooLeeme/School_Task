@@ -10,12 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import javax.swing.JPanel;
-
 import java.util.ArrayList;
-import java.util.Vector;
 import java.awt.event.*;
-import java.awt.*;
 
 /**
  * Framework that controls the game (Game.java) that created it, update it and
@@ -449,7 +445,7 @@ public class Framework extends Canvas {
         case LEVEL_MENU:
             g2d.drawImage(moonLanderMenuImg, 0, 0, frameWidth, frameHeight, null);
             g2d.setColor(Color.white);
-            g2d.drawString("Select your level!", frameWidth / 2 - 117, frameHeight / 2);
+            g2d.drawString("Select your level!", frameWidth / 2 - 40, frameHeight / 2);
             Mainbutton(false);
             Levelbutton(true);
 

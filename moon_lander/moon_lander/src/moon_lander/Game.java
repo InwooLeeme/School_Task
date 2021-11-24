@@ -44,25 +44,14 @@ public class Game extends MouseAdapter {
     private BufferedImage redBorderImg;
     /* Enemy */
 
-    // private Enemy UnmoveEnemy = new Enemy(unMovedEnemyID);
-
     private EnemyController moving_Enemy = new EnemyController(1, 1);
-
-    // private MovingEnemyWithBullet movingBulletEnemy = new
-    // MovingEnemyWithBullet(bulletEnemyID);
-
+    /* Score */
     private int baseScore = 1000;
+    private int decreaseScore = 15;
+    /* Reset Variables */
+    private int currentEnemyCount; // 게임 재시작 시 적의 숫자를 저장
+    private int currentEnemyId; // 게임 재시작 시 적의 아이디를 저장
 
-    // public void mousePressed(MouseEvent e)//마우스를 버튼을 누루면
-    // {
-    // isPress = true;
-    // makeBullet();//총알 생성
-    // }
-    //
-    // public void mouseReleased(MouseEvent e)//마우스 버튼을 놓으면
-    // {
-    // isPress = false;
-    // }
     public Game(int level) {
         Framework.gameState = Framework.GameState.GAME_CONTENT_LOADING;
         stageLevel = level;
@@ -105,6 +94,8 @@ public class Game extends MouseAdapter {
             enemyCount = 4;
             break;
         }
+        currentEnemyCount = enemyCount;
+        currentEnemyId = defaultEnemyID;
         playerRocket = new PlayerRocket(gravityLevel, playerRocketMode);
         landingArea = new LandingArea(1);
         moving_Enemy = new EnemyController(enemyCount, defaultEnemyID);
@@ -132,15 +123,8 @@ public class Game extends MouseAdapter {
         playerRocket.ResetPlayer();
         landingArea.ResetLandingArea();
         Canvas.changeBlockState(false);
-        /*
-         * if (stageLevel >= 1) UnmoveEnemy.ResetEnemy(unMovedEnemyID);
-         */
         baseScore = 1000;
-        if (stageLevel >= 1)
-            moving_Enemy.ResetController(stageLevel, 1);
-        /*
-         * if (stageLevel == 5) movingBulletEnemy.ResetEnemy(1);
-         */
+        moving_Enemy.ResetController(currentEnemyCount, currentEnemyId);
     }
 
     /**
@@ -154,11 +138,11 @@ public class Game extends MouseAdapter {
         playerRocket.Update();
         moving_Enemy.Update();
         // movingBulletEnemy.Update();
+
         // Checks where the player rocket is. Is it still in the space or is it landed
         // or crashed?
         // First we check bottom y coordinate of the rocket if is it near the landing
         // area.
-
         if (playerRocket.rocket1_Y + playerRocket.rocketImgHeight - 10 > landingArea.landingArea1_Y) {
             // Here we check if the rocket is over landing area.
             if ((playerRocket.rocket1_X > landingArea.landingArea1_X)
@@ -177,12 +161,6 @@ public class Game extends MouseAdapter {
 
         /* Enemy Collision */
         Rectangle rocket = playerRocket.makeRect1p();
-
-        /*
-         * if (UnmoveEnemy.collision(rocket, UnmoveEnemy.getBounds())) {
-         * playerRocket.crashed_1p = true; Framework.gameState =
-         * Framework.gameState.GAMEOVER; }
-         */
         /* Moving Enemy Collision */
         LinkedList<Enemy> enemys = moving_Enemy.getEnemyList();
 
@@ -206,17 +184,9 @@ public class Game extends MouseAdapter {
      */
     public void Draw(Graphics2D g2d, Point mousePosition) {
         g2d.drawImage(backgroundImg, 0, 0, Framework.frameWidth, Framework.frameHeight, null);
-
         landingArea.DrawlandingArea1p(g2d);
-
         playerRocket.Draw(g2d);
-
-        // UnmoveEnemy.Draw(g2d);
-
         moving_Enemy.Draw(g2d);
-
-        // movingBulletEnemy.Draw(g2d);
-
     }
 
     /**
@@ -236,7 +206,7 @@ public class Game extends MouseAdapter {
             g2d.drawString("You have successfully landed!", Framework.frameWidth / 2 - 100, Framework.frameHeight / 3);
             g2d.drawString("You have landed in " + gameTime / Framework.secInNanosec + " seconds.",
                     Framework.frameWidth / 2 - 100, Framework.frameHeight / 3 + 20);
-            baseScore -= (gameTime / Framework.secInNanosec) * 15;
+            baseScore -= (gameTime / Framework.secInNanosec) * decreaseScore;
             Framework.score.addScore(baseScore);
         } else {
             g2d.setColor(Color.red);

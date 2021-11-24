@@ -73,6 +73,7 @@ public class PlayerRocket {
 
     private int fuelGauge;
     private int fuelGaugeHeight = 20;
+    private int currentGameMode;
 
     public PlayerRocket(int level, int mode) {
         if (mode == 1) {
@@ -96,7 +97,7 @@ public class PlayerRocket {
             Initialize(1);
             LoadContent(2);
         }
-
+        currentGameMode = mode;
         // Now that we have rocketImgWidth we set starting x coordinate.
         if ((Framework.frameWidth - rocketImgWidth) > 0) {
             rocket1_X = random.nextInt(Framework.frameWidth - rocketImgWidth);
@@ -110,28 +111,21 @@ public class PlayerRocket {
         ResetPlayer();
         switch (level) {
         case 1:
-
             speedAccelerating = 2;
             speedStopping = 1;
-
             topLandingSpeed = 5;
             break;
         case 2:
-
             speedAccelerating = 1;
             speedStopping = 5;
             topLandingSpeed = 10;
             break;
         default:
-
             speedAccelerating = 5;
             speedStopping = 4;
-
             topLandingSpeed = 6;
             break;
-
         }
-
     }
 
     private void LoadContent(int mode) {
@@ -313,8 +307,9 @@ public class PlayerRocket {
         g2d.drawString("Rocket1p coordinates: " + rocket1_X + " : " + rocket1_Y, 5, 15);
         if (Framework.gameState == GameState.PLAYING2P)
             g2d.drawString("Rocket2p coordinates: " + rocket2_X + " : " + rocket2_Y, 500, 15);
-
-        drawFuelGuage(g2d);
+        if (currentGameMode == 1) {
+            drawFuelGuage(g2d);
+        }
         // If the rocket is landed.
         if (landed_1p) {
             g2d.drawImage(rocketLandedImg, rocket1_X, rocket1_Y, null);
