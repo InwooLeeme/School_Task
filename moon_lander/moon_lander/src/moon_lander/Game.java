@@ -6,8 +6,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.awt.*;
 import java.awt.event.*;
@@ -19,8 +17,6 @@ import java.awt.event.*;
  */
 
 public class Game extends MouseAdapter {
-
-    ArrayList<Bullet> bulletData = new ArrayList<Bullet>();// 만든 총알들을 저장
 
     private int stageLevel;
     /**
@@ -163,7 +159,7 @@ public class Game extends MouseAdapter {
         Rectangle rocket = playerRocket.makeRect1p();
         /* Moving Enemy Collision */
         LinkedList<Enemy> enemys = moving_Enemy.getEnemyList();
-
+        LinkedList<PlayerBullet> bulletData = Framework.getBulletDatas();
         for (int i = 0; i < enemys.size(); i++) {
             Enemy tempEnemy = enemys.get(i);
             Rectangle enemyBorder = tempEnemy.updateBounds();
@@ -172,8 +168,15 @@ public class Game extends MouseAdapter {
                 Framework.gameState = Framework.gameState.GAMEOVER;
                 break;
             }
+            // Player Bullet collision
+            for (int j = 0; j < bulletData.size(); j++) {
+                Rectangle bulletBorder = bulletData.get(j).drawRect();
+                if (tempEnemy.collision(enemyBorder, bulletBorder)) {
+                    moving_Enemy.removeEnemy(tempEnemy);
+                    playerRocket.addFeul(20);
+                }
+            }
         }
-
     }
 
     /**

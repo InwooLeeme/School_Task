@@ -2,7 +2,6 @@ package moon_lander;
 
 import java.awt.Color;
 
-import java.awt.Point;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -217,6 +216,10 @@ public class PlayerRocket {
     private void drawFuelGuage(Graphics2D g2d) {
         g2d.setColor(Color.black);
         g2d.fillRect(0, 40, fuelGauge, fuelGaugeHeight);
+    }
+
+    public void addFeul(int plus) {
+        this.fuelGauge += plus;
     }
 
     public Rectangle makeRect1p() {

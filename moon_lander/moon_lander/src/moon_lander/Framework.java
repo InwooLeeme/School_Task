@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.awt.event.*;
 
 /**
@@ -22,7 +22,7 @@ import java.awt.event.*;
 
 public class Framework extends Canvas {
 
-    ArrayList<PlayerBullet> bulletData = new ArrayList<PlayerBullet>();
+    public static LinkedList<PlayerBullet> bulletData = new LinkedList<PlayerBullet>();
     long prevtime = 0;
 
     boolean isPress = false;
@@ -579,6 +579,10 @@ public class Framework extends Canvas {
                 break;
             }
         }
+    }
+
+    public static LinkedList<PlayerBullet> getBulletDatas() {
+        return bulletData;
     }
 
     /**
