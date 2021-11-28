@@ -128,46 +128,24 @@ public class PlayerRocket {
     }
 
     private void LoadContent(int mode) {
-        if (mode == 1) {
+        try {
+            URL rocketImgUrl = this.getClass().getResource("/resources/images/rocket.png");
+            rocketImg = ImageIO.read(rocketImgUrl);
+            rocketImgWidth = rocketImg.getWidth();
+            rocketImgHeight = rocketImg.getHeight();
+            URL rocketLandedImgUrl = this.getClass().getResource("/resources/images/rocket_landed.png");
+            rocketLandedImg = ImageIO.read(rocketLandedImgUrl);
+            URL rocketCrashedImgUrl = this.getClass().getResource("/resources/images/rocket_crashed.png");
+            rocketCrashedImg = ImageIO.read(rocketCrashedImgUrl);
+            URL rocketFireImgUrl = this.getClass().getResource("/resources/images/rocket_fire.png");
+            rocketFireImg = ImageIO.read(rocketFireImgUrl);
+            URL blackscreenImgUrl = this.getClass().getResource("/resources/images/blackscreen.png");
+            blackscreenImg = ImageIO.read(blackscreenImgUrl);
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerRocket.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (mode == 2) {
             try {
-                URL rocketImgUrl = this.getClass().getResource("/resources/images/rocket.png");
-                rocketImg = ImageIO.read(rocketImgUrl);
-                rocketImgWidth = rocketImg.getWidth();
-                rocketImgHeight = rocketImg.getHeight();
-
-                URL rocketLandedImgUrl = this.getClass().getResource("/resources/images/rocket_landed.png");
-                rocketLandedImg = ImageIO.read(rocketLandedImgUrl);
-
-                URL rocketCrashedImgUrl = this.getClass().getResource("/resources/images/rocket_crashed.png");
-                rocketCrashedImg = ImageIO.read(rocketCrashedImgUrl);
-
-                URL rocketFireImgUrl = this.getClass().getResource("/resources/images/rocket_fire.png");
-                rocketFireImg = ImageIO.read(rocketFireImgUrl);
-
-                URL blackscreenImgUrl = this.getClass().getResource("/resources/images/blackscreen.png");
-                blackscreenImg = ImageIO.read(blackscreenImgUrl);
-            } catch (IOException ex) {
-                Logger.getLogger(PlayerRocket.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if (mode == 2) {
-            try {
-                URL rocketImgUrl = this.getClass().getResource("/resources/images/rocket.png");
-                rocketImg = ImageIO.read(rocketImgUrl);
-                rocketImgWidth = rocketImg.getWidth();
-                rocketImgHeight = rocketImg.getHeight();
-
-                URL rocketLandedImgUrl = this.getClass().getResource("/resources/images/rocket_landed.png");
-                rocketLandedImg = ImageIO.read(rocketLandedImgUrl);
-
-                URL rocketCrashedImgUrl = this.getClass().getResource("/resources/images/rocket_crashed.png");
-                rocketCrashedImg = ImageIO.read(rocketCrashedImgUrl);
-
-                URL rocketFireImgUrl = this.getClass().getResource("/resources/images/rocket_fire.png");
-                rocketFireImg = ImageIO.read(rocketFireImgUrl);
-
-                URL blackscreenImgUrl = this.getClass().getResource("/resources/images/blackscreen.png");
-                blackscreenImg = ImageIO.read(blackscreenImgUrl);
-
                 URL rocket2pImgUrl = this.getClass().getResource("/resources/images/rocket2p.png");
                 rocket2pImg = ImageIO.read(rocket2pImgUrl);
                 rocket2pImgWidth = rocket2pImg.getWidth();
